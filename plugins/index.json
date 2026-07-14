@@ -2,6 +2,14 @@
   "schema": 1,
   "plugins": [
     {
+      "id": "github",
+      "name": "GitHub",
+      "kind": [
+        "mcp"
+      ],
+      "description": "GitHub repositories, issues, and pull requests over MCP (stdio)."
+    },
+    {
       "id": "superpowers",
       "name": "Superpowers",
       "kind": [

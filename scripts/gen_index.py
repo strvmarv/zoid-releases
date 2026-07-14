@@ -8,12 +8,15 @@ def build_index(plugins_dir: Path) -> dict:
     for toml_path in sorted(plugins_dir.glob("*.toml")):
         with toml_path.open("rb") as fh:
             data = tomllib.load(fh)
-        p, s = data["plugin"], data["source"]
+        p = data["plugin"]
         entry = {
             "id": p["id"], "name": p.get("name", p["id"]),
             "kind": p["kind"], "description": p.get("description", ""),
-            "source": {"repo": s["repo"], "ref": s["ref"]},
         }
+        # `mcp` manifests declare no [source]; emit source only when present.
+        if "source" in data:
+            s = data["source"]
+            entry["source"] = {"repo": s["repo"], "ref": s["ref"]}
         if "license" in p:
             entry["license"] = p["license"]
         entries.append(entry)
